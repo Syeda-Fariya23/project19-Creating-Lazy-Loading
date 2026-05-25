@@ -1,0 +1,188 @@
+
+
+## 1️⃣ Selecting elements from the page
+
+```js
+const progress = document.querySelector(".progress");
+const background = document.querySelector(".background");
+```
+
+👉 This grabs elements from your HTML:
+
+* `.progress` → the text showing `0%`, `1%`, `2%`, etc
+* `.background` → the background image or div you want to blur/unblur
+
+Think of this as:
+**“Hey browser, give me these two things so I can control them.”**
+
+---
+
+## 2️⃣ Setting up the loading counter
+
+```js
+let load = 0;
+```
+
+This is your **loading number**.
+
+It starts at `0` and will increase until it reaches `100`.
+
+---
+
+## 3️⃣ Running code repeatedly (the animation engine)
+
+```js
+let int = setInterval(blurring, 30);
+```
+
+This tells the browser:
+
+> “Every **30 milliseconds**, run the `blurring` function.”
+
+So:
+
+* The page updates ~33 times per second
+* That’s what makes the animation feel smooth
+
+---
+
+## 4️⃣ The main function (the heart of everything)
+
+```js
+function blurring() {
+```
+
+This function runs **over and over** because of `setInterval`.
+
+---
+
+### ➕ Increase the loading number
+
+```js
+load++;
+```
+
+Each time the function runs:
+
+* `load` goes up by 1
+* `0 → 1 → 2 → 3 → ...`
+
+---
+
+### 🛑 Stop when it reaches 100
+
+```js
+if (load > 99) {
+    clearInterval(int);
+}
+```
+
+Once loading is done:
+
+* Stop the repeating loop
+* Otherwise it would keep going forever
+
+---
+
+### 📝 Update the text on screen
+
+```js
+progress.innerHTML = `${load}%`
+```
+
+This changes what the user sees:
+
+* `23%`
+* `57%`
+* `100%`
+
+So the text always matches the current loading value.
+
+---
+
+## 5️⃣ Fade out the loading text
+
+```js
+progress.style.opacity = scale(load, 0, 100, 1, 0);
+```
+
+Here’s what’s happening:
+
+* `opacity: 1` = fully visible
+* `opacity: 0` = invisible
+
+As `load` goes from **0 → 100**
+Opacity goes from **1 → 0**
+
+So the text slowly fades away.
+
+---
+
+## 6️⃣ Unblur the background
+
+```js
+background.style.filter = 
+  `blur(${scale(load, 0, 100, 30, 0)}px)`
+```
+
+* At the start: `blur(30px)` → very blurry
+* At the end: `blur(0px)` → clear
+
+As loading increases:
+
+* Blur decreases
+* Image becomes sharp
+
+---
+
+## 7️⃣ The magic helper: `scale()`
+
+```js
+const scale = (num, in_min, in_max, out_min, out_max) => {
+  return ((num - in_min) * (out_max - out_min)) 
+         / (in_max - in_min) 
+         + out_min;
+};
+```
+
+This function **converts one range of numbers into another**.
+
+### In plain English:
+
+> “If a number is somewhere between A and B,
+> give me the matching value between C and D.”
+
+### Examples:
+
+```js
+scale(0,   0, 100, 1, 0)   → 1
+scale(50,  0, 100, 1, 0)   → 0.5
+scale(100, 0, 100, 1, 0)   → 0
+```
+
+So:
+
+* Loading controls opacity
+* Loading controls blur
+* One number drives everything 🎯
+
+---
+
+## 🧩 Final mental model
+
+Think of it like a dimmer switch:
+
+* `load` is the knob
+* `scale()` translates the knob into effects
+* `setInterval` turns the knob slowly
+* The page reacts visually
+
+---
+
+If you want next:
+
+* I can explain `scale()` with a **real-life analogy**
+* Draw a **timeline of what changes**
+* Rewrite this using **CSS animations instead of JS**
+
+Just tell me 👍

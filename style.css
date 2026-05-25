@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100ch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0;
+
+
+}
+.background
+{
+    background: url(https://images.pexels.com/photos/3034343/pexels-photo-3034343.jpeg)no-repeat center center/cover;
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: calc(100vw + 60px);
+    height: calc(100vh + 60px);
+    filter: blur(0);
+    z-index: -1;
+
+}
+.progress
+{
+    font-size: 50px;
+    color: rgb(0, 0, 0);
+}
